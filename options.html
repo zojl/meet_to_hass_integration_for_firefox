@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Google Meet Detector – Настройки</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+
+    .input-group {
+      position: relative;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      top: 1px;
+      right: 0;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: #333;
+      cursor: pointer;
+      background-color: #fff;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .status {
+      margin-top: 15px;
+      font-size: 0.9em;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <label for="ha_url">Home Assistant host:</label>
+  <input type="text" id="ha_url" placeholder="https://your-home.local:8123" />
+
+  <label for="ha_token">Long-lived access token:</label>
+  <div class="input-group">
+    <input type="password" id="ha_token" />
+    <button class="toggle-password" id="toggleToken">Show</button>
+  </div>
+
+  <label for="entity_id">Entity ID:</label>
+  <input type="text" id="entity_id" placeholder="input_boolean.meet_status" />
+
+  <button id="save">Save</button>
+  <div class="status" id="status"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
