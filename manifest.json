@@ -22,5 +22,11 @@
   "options_ui": {
     "page": "options.html",
     "open_in_tab": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "meet_to_hass_integration@zojl.dev",
+      "strict_min_version": "137.0"
+    }
   }
 }
