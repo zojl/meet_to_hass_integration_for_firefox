@@ -49,7 +49,7 @@ jobs:
             --api-secret=$AMO_API_SECRET \
             --source-dir=build \
             --artifacts-dir=web-ext-artifacts \
-            --channel=release
+            --channel=unlisted
         env:
           AMO_API_KEY: ${{ secrets.AMO_API_KEY }}
           AMO_API_SECRET: ${{ secrets.AMO_API_SECRET }}
