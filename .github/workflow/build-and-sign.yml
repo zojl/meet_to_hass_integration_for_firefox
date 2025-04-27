@@ -1,0 +1,63 @@
+name: Build, Sign and Release Firefox Addon
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-sign-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install web-ext
+        run: npm install -g web-ext
+
+      - name: Prepare clean build directory
+        run: |
+          mkdir build
+          rsync -av --exclude='README.txt' --exclude='.git*' --exclude='node_modules' --exclude='.github' ./ ./build/
+
+      - name: Update manifest version from tag
+        run: |
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG_NAME#v}
+          echo "Using version $VERSION from tag $TAG_NAME"
+          sed -i "s/\"version\": \"[^\"]*\"/\"version\": \"$VERSION\"/" build/manifest.json
+
+      - name: Validate manifest.json
+        run: |
+          jq '.' build/manifest.json > /dev/null
+          VERSION=$(jq -r '.version' build/manifest.json)
+          if [[ "$VERSION" == "null" || -z "$VERSION" ]]; then
+            echo "❌ Error: manifest.json missing valid version"
+            exit 1
+          fi
+
+      - name: Sign addon
+        run: |
+          web-ext sign \
+            --api-key=$AMO_API_KEY \
+            --api-secret=$AMO_API_SECRET \
+            --source-dir=build \
+            --artifacts-dir=web-ext-artifacts
+        env:
+          AMO_API_KEY: ${{ secrets.AMO_API_KEY }}
+          AMO_API_SECRET: ${{ secrets.AMO_API_SECRET }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          files: web-ext-artifacts/*.xpi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

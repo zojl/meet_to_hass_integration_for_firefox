@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         status.textContent = "Saved, but connection to Home Assistant failed";
       })
       .finally(() => {
+        browser.storage.local.remove('meet_status');
         setTimeout(() => (status.textContent = ""), 3000);
       })
 

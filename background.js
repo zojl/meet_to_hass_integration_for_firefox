@@ -5,6 +5,10 @@ browser.storage.local.onChanged.addListener((changes) => {
     return;
   }
 
+  if (!Object.keys(changes.meet_status).includes("newValue")) {
+    return;
+  }
+
   if (changes.meet_status.newValue === changes.meet_status.oldValue) {
     return;
   }
@@ -43,4 +47,4 @@ interval = setInterval(() => {
     const hasMeeting = activeTabsCount > 0;
     browser.storage.local.set({meet_status: hasMeeting});
   });
-}, 100);
+}, 250);
