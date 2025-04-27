@@ -12,4 +12,4 @@ It is recommended to use separate sensors for browsers on different computers, o
 The add-on is open source, feel free to contribute!
 
 The addon is available at addons.mozilla.org  
-[![](https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png)](https://addons.mozilla.org/ru/firefox/addon/meet-to-hass-integration/)
+[![](https://blog.mozilla.org/addons/files/2015/11/get-the-addon.png)](https://addons.mozilla.org/firefox/addon/meet-to-hass-integration/)
